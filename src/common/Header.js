@@ -1,9 +1,29 @@
 import React from 'react'
-import { Menu, Layout, Input, Row, Col, Avatar } from 'antd'
+import { Menu, Layout, Input, Row, Col, Avatar, Dropdown, Icon } from 'antd'
 import styled from 'styled-components'
 const { Search } = Input
 
 const { Header } = Layout
+
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a target='_blank' rel='noopener noreferrer' href='http://www.alipay.com/'>
+        1st menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target='_blank' rel='noopener noreferrer' href='http://www.taobao.com/'>
+        2nd menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target='_blank' rel='noopener noreferrer' href='http://www.tmall.com/'>
+        3rd menu item
+      </a>
+    </Menu.Item>
+  </Menu>
+)
 const HeaderComp = props => {
   return (
     <Header className='header' style={{ paddingLeft: 100, paddingRight: 100 }}>
@@ -28,6 +48,11 @@ const HeaderComp = props => {
         </Col>
         <Col span={4}>
           <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
+          <Dropdown overlay={menu}>
+            <a className='ant-dropdown-link' href='#'>
+              <Icon type='down' />
+            </a>
+          </Dropdown>
         </Col>
       </Row>
     </Header>
