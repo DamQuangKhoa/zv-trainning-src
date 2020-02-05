@@ -1,0 +1,11 @@
+Report Work
+Day : 04/02/2020
+
+- Finish making header component
+- Finish making homepage view
+- Finish making detail page view
+
+Today work: 
+- Refractor to component
+- Call API with redux-saga
+
