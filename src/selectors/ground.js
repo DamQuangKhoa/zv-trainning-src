@@ -1,25 +1,24 @@
 import { createSelector } from 'reselect'
+import { toJS } from 'immutable'
+const getVisible = state => {
+  return state.get('visible')
+}
+const getGround = state => {
+  return state.get('grounds').toJS()
+}
+const getFilterValue = state => state.get('filter_value')
 
-const getVisible = state => state.visible
-const getGround = state => state.ground
-const getFilterValue = state => state.keyword
-
-export const getVisibleGround = createSelector([getVisible, getGround], (value, grounds) => {
+export const getVisibleGround = createSelector([getVisible, getGround], (visibilityFilter, grounds) => {
   switch (visibilityFilter) {
     case 'SHOW_ALL':
-      return ground
+      return grounds
     case 'SHOW_AVAILABLE':
-      return ground.filter(g => g.available)
+      return grounds.filter(g => g.available)
     case 'SHOW_UN_AVAILABLE':
-      return todos.filter(g => !g.available)
+      return grounds.filter(g => !g.available)
   }
 })
-const getVisibleTodosFilteredByKeyword = createSelector(
-  [ getVisibleTodos, getKeyword ],
-  (visibleTodos, keyword) => visibleTodos.filter(
-    todo => todo.text.includes(keyword)
-  )
-)
-export const getFilterGround = createSelector([getGround, getFilterValue], (grounds, keyword) =>
-  grounds.filter(g => g.price >= keyword)
+export const getVisibleGroundFilteredByKeyword = createSelector(
+  [getVisibleGround, getFilterValue],
+  (visibleGround, keyword) => visibleGround.filter(ground => ground.price >= keyword)
 )

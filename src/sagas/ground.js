@@ -12,7 +12,6 @@ function* getListGround() {
     // const {
     //   data:  response["data"] ,
     // }
-    console.log(response.data)
 
     yield put(groundActions.getListSuccess(response.data))
   }
@@ -29,7 +28,6 @@ function* getSingleGround({ payload }) {
     // const {
     //   data:  response["data"] ,
     // }
-    console.log(response.data)
 
     yield put(groundActions.getSingleSuccess(response.data))
   }

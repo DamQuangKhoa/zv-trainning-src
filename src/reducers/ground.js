@@ -3,6 +3,15 @@ import { createSelector } from 'reselect'
 /*
  Action Types
  */
+
+const SHOW_ALL_VISIBLE = 'SHOW_ALL'
+const SHOW_AVAILABLE_VISIBLE = 'SHOW_AVAILABLE'
+const SHOW_UN_AVAILABLE_VISIBLE = 'SHOW_UN_AVAILABLE'
+
+export const FILTER_SET_VALUE = 'grounds/action/FILTER_SET_VALUE  '
+export const FILTER_SET_VALUE_SUCCESS = 'grounds/action/FILTER_SET_VALUE_SUCCESS '
+export const FILTER_SET_VALUE_FAIL = 'grounds/action/FILTER_SET_VALUE_FAIL'
+
 export const GROUND_GET_DATA = 'grounds/action/GET_LIST '
 export const GROUND_GET_DATA_SUCCESS = 'grounds/action/GET_LIST_SUCCESS'
 export const GROUND_GET_DATA_FAIL = 'grounds/action/GET_LIST_FAIL '
@@ -18,6 +27,27 @@ export const GROUND_FILTER_FAIL = 'grounds/action/GET_FILTER_FAIL '
  Actions
  */
 
+const setFilterValue = value => {
+  return {
+    type: FILTER_SET_VALUE,
+    payload: {
+      value,
+    },
+  }
+}
+const setFilterValueSuccess = payload => {
+  return {
+    type: FILTER_SET_VALUE_SUCCESS,
+    payload,
+  }
+}
+
+const setFilterValueFail = errorMessage => {
+  return {
+    type: FILTER_SET_VALUE_FAIL,
+    errorMessage,
+  }
+}
 const getFilterData = () => {
   return {
     type: GROUND_FILTER_DATA,
@@ -85,6 +115,9 @@ export const actions = {
   getFilterData,
   getFilterDataSuccess,
   getFilterDataFail,
+  setFilterValue,
+  setFilterValueSuccess,
+  setFilterValueFail,
 }
 // selectors
 
@@ -97,6 +130,8 @@ export const initialState = fromJS({
   grounds: emptyList,
   errorMessage: '',
   ground: emptyObject,
+  visible: SHOW_ALL_VISIBLE,
+  filter_value: 0,
 })
 
 export const selectGroundState = state => state.groundReducer || initialState
@@ -110,8 +145,6 @@ function groundReducer(state = initialState, action) {
       return state.set('isLoading', true)
     case GROUND_GET_DATA_SUCCESS: {
       const { payload } = action
-      console.log(action)
-
       return state.set('grounds', fromJS(payload)).set('isLoading', false)
     }
     case GROUND_GET_DATA_FAIL:
@@ -121,7 +154,6 @@ function groundReducer(state = initialState, action) {
       return state.set('isLoading', true)
     case GROUND_GET_SINGLE_SUCCESS: {
       const { payload } = action
-      console.log(action)
       return state.set('ground', fromJS(payload)).set('isLoading', false)
     }
     case GROUND_GET_SINGLE_FAIL:
@@ -137,6 +169,15 @@ function groundReducer(state = initialState, action) {
     case GROUND_FILTER_FAIL:
       return state.set('errorMessage', action.errorMessage).set('isLoading', false)
 
+    case FILTER_SET_VALUE:
+      return state.set('isLoading', true)
+    case FILTER_SET_VALUE_SUCCESS: {
+      const { payload } = action
+
+      return state.set('grounds', fromJS(payload)).set('isLoading', false)
+    }
+    case FILTER_SET_VALUE_FAIL:
+      return state.set('errorMessage', action.errorMessage).set('isLoading', false)
     default:
       return state
   }
