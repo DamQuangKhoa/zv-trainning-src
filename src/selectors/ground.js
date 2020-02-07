@@ -1,13 +1,21 @@
 import { createSelector } from 'reselect'
-import { toJS } from 'immutable'
+import { orderBy } from 'lodash'
 const getVisible = state => {
   return state.get('visible')
 }
 const getGround = state => {
   return state.get('grounds').toJS()
 }
-const getFilterValue = state => state.get('filter_value')
+const getFilterValue = state => {
+  return state.get('filter_value')
+}
 
+const getSearchValue = state => {
+  return state.get('search_value')
+}
+const getSortValue = state => {
+  return state.get('sort_value')
+}
 export const getVisibleGround = createSelector([getVisible, getGround], (visibilityFilter, grounds) => {
   switch (visibilityFilter) {
     case 'SHOW_ALL':
@@ -20,5 +28,21 @@ export const getVisibleGround = createSelector([getVisible, getGround], (visibil
 })
 export const getVisibleGroundFilteredByKeyword = createSelector(
   [getVisibleGround, getFilterValue],
-  (visibleGround, keyword) => visibleGround.filter(ground => ground.price >= keyword)
+  (visibleGround, keyword) => {
+    return visibleGround.filter(ground => ground.price >= keyword)
+  }
+)
+
+export const getVisibleGroundSearchByKeyword = createSelector(
+  [getVisibleGround, getSearchValue],
+  (visibleGround, keyword) => {
+    return visibleGround.filter(ground => ground.title.includes(keyword))
+  }
+)
+export const getVisibleGroundSortByKeyword = createSelector(
+  [getVisibleGround, getSortValue],
+  (visibleGround, keyword) => {
+    let result = orderBy(visibleGround, keyword.toJS().field, keyword.toJS().order)
+    return visibleGround.filter(ground => ground.title.includes(keyword))
+  }
 )
