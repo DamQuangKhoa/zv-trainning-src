@@ -8,6 +8,10 @@ const SHOW_ALL_VISIBLE = 'SHOW_ALL'
 const SHOW_AVAILABLE_VISIBLE = 'SHOW_AVAILABLE'
 const SHOW_UN_AVAILABLE_VISIBLE = 'SHOW_UN_AVAILABLE'
 
+export const GROUND_HANDLE_FILTER_API = 'grounds/action/GROUND_HANDLE_FILTER_API '
+export const GROUND_HANDLE_FILTER_API_SUCCESS = 'grounds/action/GROUND_HANDLE_FILTER_API_SUCCESS '
+export const GROUND_HANDLE_FILTER_API_FAIL = 'grounds/action/GROUND_HANDLE_FILTER_API_FAIL'
+
 export const GROUND_SET_SORT_VALUE = 'grounds/action/GROUND_SET_SORT_VALUE '
 export const GROUND_SET_SORT_VALUE_SUCCESS = 'grounds/action/GROUND_SET_SORT_VALUE_SUCCESS '
 export const GROUND_SET_SORT_VALUE_FAIL = 'grounds/action/GROUND_SET_SORT_VALUE_FAIL '
@@ -35,6 +39,27 @@ export const GROUND_FILTER_FAIL = 'grounds/action/GET_FILTER_FAIL '
  Actions
  */
 
+const handleFilterAPI = filter_value => {
+  return {
+    type: GROUND_HANDLE_FILTER_API,
+    payload: {
+      filter_value: filter_value,
+    },
+  }
+}
+const handleFilterAPISuccess = payload => {
+  return {
+    type: GROUND_HANDLE_FILTER_API_SUCCESS,
+    payload,
+  }
+}
+
+const handleFilterAPIFail = errorMessage => {
+  return {
+    type: GROUND_HANDLE_FILTER_API_FAIL,
+    errorMessage,
+  }
+}
 const setSortValue = payload => {
   return {
     type: GROUND_SET_SORT_VALUE,
@@ -172,6 +197,9 @@ export const actions = {
   setSortValue,
   setSortValueSuccess,
   setSortValueSuccess,
+  handleFilterAPI,
+  handleFilterAPISuccess,
+  handleFilterAPIFail,
 }
 // selectors
 
@@ -213,7 +241,7 @@ function groundReducer(state = initialState, action) {
       return state.set('isLoading', true)
     case GROUND_GET_SINGLE_SUCCESS: {
       const { payload } = action
-      return state.set('ground', fromJS(payload)).set('isLoading', false)
+      return state.set('ground', fromJS(payload.data)).set('isLoading', false)
     }
     case GROUND_GET_SINGLE_FAIL:
       console.log('error', action.errorMessage)
@@ -257,6 +285,15 @@ function groundReducer(state = initialState, action) {
       return state.set('sort_value', fromJS(payload)).set('isLoading', false)
     }
     case GROUND_SET_SORT_VALUE_FAIL:
+      return state.set('errorMessage', action.errorMessage).set('isLoading', false)
+
+    case GROUND_HANDLE_FILTER_API:
+      return state.set('isLoading', true)
+    case GROUND_HANDLE_FILTER_API_SUCCESS: {
+      const { payload } = action
+      return state.set('grounds', fromJS(payload)).set('isLoading', false)
+    }
+    case GROUND_HANDLE_FILTER_API_FAIL:
       return state.set('errorMessage', action.errorMessage).set('isLoading', false)
     default:
       return state

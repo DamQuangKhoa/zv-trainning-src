@@ -1,51 +1,26 @@
 import React from 'react'
 import { Row, Col, Rate, Divider, Avatar, Button } from 'antd'
-import styled from 'styled-components'
-
-const DescribeSyled = styled.div`
-  text-align: initial;
-  font-size: 18px;
-`
-const ContentTitleSyled = styled.div`
-  text-align: initial;
-  font-size: 40px;
-  weight: bold;
-`
-const PriceSyled = styled.div`
-  text-align: start;
-  font-size: 35px;
-  weight: bold;
-  color: green;
-`
-const TimeSyled = styled.div`
-  font-size: 25px;
-  weight: bold;
-`
-const BookButtonSyled = styled(Button)`
-  width: 100%;
-  height: 60px;
-  background: #00ff00;
-`
-const ShareButtonSyled = styled(Button)`
-  width: 100%;
-  height: 60px;
-  background: white;
-`
+import {
+  ContentTitleSyled,
+  DescribeSyled,
+  PriceSyled,
+  TimeSyled,
+  BookButtonSyled,
+  ShareButtonSyled,
+} from './styled/GroundDetailStyled'
 
 const GroundDetail = props => {
+  const { ground } = props
   return (
     <Row type='flex' justify='start' gutter={[32, 42]} style={{ textAlign: 'initial' }}>
       <Col span={16}>
-        <img
-          style={{ width: '100%' }}
-          src='https://www.keonhanh.com/wp-content/uploads/2019/01/san-bong-da-mini-tphcm-tot-nhat.jpg'
-        ></img>
+        <img style={{ width: '100%' }} src={ground.image}></img>
       </Col>
       <Col span={8}>
         <Row gutter={[0, 24]}>
-          <ContentTitleSyled> Old Trafford Stadium </ContentTitleSyled>
+          <ContentTitleSyled> {ground.title}</ContentTitleSyled>
           <Col span={20}>
-            <DescribeSyled> Sir Matt Busby way, Stretford Manchester M17 ORA, UK</DescribeSyled>
+            <DescribeSyled> {ground.description}</DescribeSyled>
           </Col>
           <Col span={8}>
             <Rate disabled allowHalf defaultValue={4.5} />

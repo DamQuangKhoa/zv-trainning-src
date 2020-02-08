@@ -1,28 +1,6 @@
 import React from 'react'
 import { List, Card, Row, Col } from 'antd'
-import styled from 'styled-components'
-
-const DescribeSyled = styled.div`
-  text-align: initial;
-  font-size: 18px;
-`
-const TitleSyled = styled.div`
-  text-align: initial;
-  font-size: 25px;
-  weight: bold;
-`
-const PriceSyled = styled.div`
-  text-align: end;
-  font-size: 25px;
-  weight: bold;
-  color: green;
-`
-const TimeSyled = styled.div`
-  font-size: 20px;
-  weight: bold;
-  color: green;
-  text-align: end;
-`
+import { TitleSyled, DescribeSyled, PriceSyled, TimeSyled } from './styled/HomeStyled'
 
 const listData = []
 for (let i = 0; i < 6; i++) {
@@ -41,10 +19,10 @@ const HomeList = props => {
     <Row>
       <List
         grid={{ column: 3, gutter: [32, 32] }}
-        dataSource={listData}
+        dataSource={props.grounds}
         renderItem={item => (
           <List.Item>
-            <Card cover={<img alt='example' src={item.image} />}>
+            <Card onClick={() => props.hanleGroundClick()} cover={<img alt='example' src={item.image} />}>
               <>
                 <Row type='flex'>
                   <TitleSyled>{item.title}</TitleSyled>

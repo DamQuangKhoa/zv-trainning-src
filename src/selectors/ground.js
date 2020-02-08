@@ -6,6 +6,9 @@ const getVisible = state => {
 const getGround = state => {
   return state.get('grounds').toJS()
 }
+const getSingleGround = state => {
+  return state.get('ground').toJS()
+}
 const getFilterValue = state => {
   return state.get('filter_value')
 }
@@ -16,6 +19,7 @@ const getSearchValue = state => {
 const getSortValue = state => {
   return state.get('sort_value')
 }
+
 export const getVisibleGround = createSelector([getVisible, getGround], (visibilityFilter, grounds) => {
   switch (visibilityFilter) {
     case 'SHOW_ALL':
