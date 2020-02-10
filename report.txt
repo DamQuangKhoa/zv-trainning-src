@@ -5,7 +5,13 @@ Day : 04/02/2020
 - Finish making homepage view
 - Finish making detail page view
 
-Today work: 
+Thursday work:
+- Fix bug component 
 - Refractor to component
 - Call API with redux-saga
 
+Friday work:
+- Refractor structure code
+- Update Filter, Search,Sorted
+- Research Redux-saga document
+- Update retry call api 
